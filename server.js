@@ -14,18 +14,15 @@ mongoose
     process.exit(1);
   });
 
-// 1) GET /restaurants (all columns) OR 3) GET /restaurants?sortBy=ASC|DESC
 app.get("/restaurants", async (req, res) => {
   try {
     const sortBy = (req.query.sortBy || "").toUpperCase();
 
-    // No sortBy => return ALL columns
     if (!sortBy) {
       const data = await Restaurant.find({});
       return res.json(data);
     }
 
-    // sortBy must be ASC or DESC
     if (sortBy !== "ASC" && sortBy !== "DESC") {
       return res.status(400).json({ error: "sortBy must be ASC or DESC" });
     }
@@ -51,7 +48,6 @@ app.get("/restaurants", async (req, res) => {
   }
 });
 
-// 2) GET /restaurants/cuisine/:cuisine (all columns)
 app.get("/restaurants/cuisine/:cuisine", async (req, res) => {
   try {
     const cuisine = req.params.cuisine;
@@ -62,7 +58,6 @@ app.get("/restaurants/cuisine/:cuisine", async (req, res) => {
   }
 });
 
-// 4) GET /restaurants/Delicatessen
 app.get("/restaurants/Delicatessen", async (req, res) => {
   try {
     const rows = await Restaurant.find(
